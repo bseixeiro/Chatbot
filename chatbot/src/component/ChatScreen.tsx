@@ -20,7 +20,13 @@ const ChatScreen: FC<IProps> = () => {
     setText("");
     setChats(newChats);
 
-    const reponse = await getPromptReponse(text);
+    const conv = newChats
+      .map((c) => {
+        return `${c.sender}: ${c.text}`;
+      })
+      .join(";\n");
+
+    const reponse = await getPromptReponse(conv);
     newChats = [...newChats, { sender: "PokeChat" as const, text: reponse }];
     setChats(newChats);
   };
